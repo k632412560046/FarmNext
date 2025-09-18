@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmNext - Connecting Agriculture & Enterprises</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1492496913980-501348b61469?q=80&w=2787&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800" x-data="farmNextApp()">
+
+    <!-- Main Landing Page -->
+    <div id="landing-page" x-show="!isLoggedIn" class="fade-in">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-50">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-green-700">FarmNext</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-green-700">Features</a>
+                    <a href="#user-flow" class="text-gray-600 hover:text-green-700">How It Works</a>
+                    <a href="#contact" class="text-gray-600 hover:text-green-700">Contact</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button @click="openLoginModal()" class="px-4 py-2 text-green-700 border border-green-700 rounded-lg hover:bg-green-50">Log In</button>
+                    <button @click="openLoginModal()" class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800">Sign Up</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <main>
+            <section class="hero-bg text-white">
+                <div class="container mx-auto px-6 py-24 text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">FarmNext</h1>
+                    <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">A digital platform for the agricultural supply chain, connecting Cooperatives with Processing Enterprises transparently and efficiently.</p>
+                    <div class="flex justify-center space-x-4">
+                        <button @click="loginAs('farmer')" class="px-8 py-3 bg-white text-green-700 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300">For Cooperatives</button>
+                        <button @click="loginAs('corp')" class="px-8 py-3 bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-800 transition duration-300">For Enterprises</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="py-20 bg-white">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold mb-2">A Comprehensive Solution</h2>
+                    <p class="text-gray-600 mb-12">FarmNext provides a powerful toolkit for both parties.</p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Feature 1 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="line-chart" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Supply Chain Transparency</h3>
+                            <p class="text-gray-600">Track the journey of agricultural products from farm to factory with real-time data, ensuring clear traceability.</p>
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="shield-check" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Quality Management</h3>
+                            <p class="text-gray-600">Digitize test results, manage certifications (VietGAP, GlobalGAP), and track the percentage of compliant shipments.</p>
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="siren" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Risk Management</h3>
+                            <p class="text-gray-600">Receive early warnings about diseases, weather, delivery risks, and legal issues for timely responses.</p>
+                        </div>
+                        <!-- Feature 4 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="bar-chart-3" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Smart Reports</h3>
+                            <p class="text-gray-600">An intuitive reporting system helps evaluate production performance, quality, and supply chain efficiency.</p>
+                        </div>
+                        <!-- Feature 5 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="book-open-check" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Training & Development</h3>
+                            <p class="text-gray-600">Provide online courses to help farmers update their knowledge, skills, and meet enterprise standards.</p>
+                        </div>
+                        <!-- Feature 6 -->
+                        <div class="p-8 border rounded-lg shadow-sm hover:shadow-lg transition">
+                            <i data-lucide="messages-square" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold mb-2">Connection & Support</h3>
+                            <p class="text-gray-600">Easily contact partners, consultants, and the FarmNext team via live chat or AI support.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- User Flow Section -->
+            <section id="user-flow" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl font-bold text-center mb-12">Simple User Flow</h2>
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Farmer Flow -->
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-green-800">For Cooperatives</h3>
+                            <ol class="relative border-l border-green-200">                  
+                                <li class="mb-10 ml-6">            
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-white">1</span>
+                                    <h4 class="flex items-center mb-1 text-lg font-semibold text-gray-900">Register Profile</h4>
+                                    <p class="mb-4 text-base font-normal text-gray-500">Create an account and update information about the cooperative, production capacity, and certifications.</p>
+                                </li>
+                                <li class="mb-10 ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-white">2</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Participate in Training</h4>
+                                    <p class="text-base font-normal text-gray-500">Access courses to enhance skills and meet market standards.</p>
+                                </li>
+                                <li class="mb-10 ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-white">3</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Update Data</h4>
+                                    <p class="text-base font-normal text-gray-500">Provide information on seasons, yields, delivery schedules, and quality results.</p>
+                                </li>
+                                <li class="ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -left-3 ring-8 ring-white">4</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Track & Report</h4>
+                                    <p class="text-base font-normal text-gray-500">Monitor order status, payments, and view performance reports.</p>
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Enterprise Flow -->
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-6 text-blue-800">For Enterprises</h3>
+                            <ol class="relative border-l border-blue-200">                  
+                                <li class="mb-10 ml-6">            
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">1</span>
+                                    <h4 class="flex items-center mb-1 text-lg font-semibold text-gray-900">Register & Search</h4>
+                                    <p class="mb-4 text-base font-normal text-gray-500">Create an enterprise profile and search for suitable suppliers based on various criteria.</p>
+                                </li>
+                                <li class="mb-10 ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">2</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Manage Contracts</h4>
+                                    <p class="text-base font-normal text-gray-500">Send offers, negotiate terms, and manage orders online.</p>
+                                </li>
+                                <li class="mb-10 ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">3</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Monitor Supply Chain</h4>
+                                    <p class="text-base font-normal text-gray-500">Get real-time updates on delivery status, quality, and compliance.</p>
+                                </li>
+                                <li class="ml-6">
+                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">4</span>
+                                    <h4 class="mb-1 text-lg font-semibold text-gray-900">Payment & Reporting</h4>
+                                    <p class="text-base font-normal text-gray-500">Use transaction support services, make payments, and view aggregated supplier reports.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CTA Section -->
+            <section class="bg-green-700 text-white">
+                <div class="container mx-auto px-6 py-16 text-center">
+                    <h2 class="text-3xl font-bold mb-4">Ready to Go Digital with FarmNext?</h2>
+                    <p class="text-green-100 mb-8 max-w-2xl mx-auto">Join our platform today to build a more sustainable and efficient agricultural supply chain.</p>
+                    <button @click="openLoginModal()" class="px-8 py-3 bg-white text-green-700 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300">Get Started Now</button>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer id="contact" class="bg-gray-800 text-white">
+            <div class="container mx-auto px-6 py-10">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">FarmNext</h3>
+                        <p class="text-gray-400">Connecting agricultural value.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Links</h3>
+                        <ul>
+                            <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Contact</h3>
+                        <p class="text-gray-400">Email: support@farmnext.com</p>
+                        <p class="text-gray-400">Hotline: 1900 1234</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-500">
+                    &copy; 2025 FarmNext. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Login Modal -->
+    <div x-show="isLoginModalOpen" @click.away="closeLoginModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+            <h2 class="text-2xl font-bold mb-6 text-center">Welcome to FarmNext</h2>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">You are a:</label>
+                <div class="flex space-x-4">
+                    <label class="flex items-center flex-1">
+                        <input type="radio" name="userType" value="farmer" x-model="userType" class="form-radio text-green-600">
+                        <span class="ml-2">Cooperative</span>
+                    </label>
+                    <label class="flex items-center flex-1">
+                        <input type="radio" name="userType" value="corp" x-model="userType" class="form-radio text-blue-600">
+                        <span class="ml-2">Enterprise</span>
+                    </label>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="your.email@example.com">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700 mb-2">Password</label>
+                <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="••••••••">
+            </div>
+            <button @click="performLogin()" class="w-full py-3 bg-green-700 text-white rounded-lg font-semibold hover:bg-green-800 transition">Log In</button>
+            <p class="text-center text-sm text-gray-600 mt-4">
+                Don't have an account? <a href="#" class="text-green-700 hover:underline">Sign up now</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" x-show="isLoggedIn" x-cloak class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md flex-shrink-0" :class="userType === 'farmer' ? 'text-green-800' : 'text-blue-800'">
+            <div class="p-6">
+                <a href="#" class="text-2xl font-bold" :class="userType === 'farmer' ? 'text-green-700' : 'text-blue-700'">FarmNext</a>
+                <p class="text-sm text-gray-500 mt-1" x-text="userType === 'farmer' ? 'Cooperative Portal' : 'Enterprise Portal'"></p>
+            </div>
+            <nav class="mt-6">
+                <!-- Common Menu -->
+                <a href="#" @click.prevent="activeTab = 'dashboard'" :class="{'bg-green-100 text-green-800': activeTab === 'dashboard' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'dashboard' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i> Dashboard
+                </a>
+                <a href="#" @click.prevent="activeTab = 'supply-chain'" :class="{'bg-green-100 text-green-800': activeTab === 'supply-chain' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'supply-chain' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="truck" class="w-5 h-5 mr-3"></i> Supply Chain
+                </a>
+                 <a href="#" @click.prevent="activeTab = 'quality'" :class="{'bg-green-100 text-green-800': activeTab === 'quality' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'quality' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="shield-check" class="w-5 h-5 mr-3"></i> Quality Control
+                </a>
+                 <a href="#" @click.prevent="activeTab = 'risk'" :class="{'bg-green-100 text-green-800': activeTab === 'risk' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'risk' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="siren" class="w-5 h-5 mr-3"></i> Risk Management
+                </a>
+                <a href="#" @click.prevent="activeTab = 'reports'" :class="{'bg-green-100 text-green-800': activeTab === 'reports' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'reports' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i> Reports
+                </a>
+                 <a href="#" @click.prevent="activeTab = 'contact'" :class="{'bg-green-100 text-green-800': activeTab === 'contact' && userType === 'farmer', 'bg-blue-100 text-blue-800': activeTab === 'contact' && userType === 'corp'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                    <i data-lucide="messages-square" class="w-5 h-5 mr-3"></i> Contact & Support
+                </a>
+
+                <!-- Farmer only menu -->
+                <div x-show="userType === 'farmer'">
+                    <a href="#" @click.prevent="activeTab = 'courses'" :class="{'bg-green-100 text-green-800': activeTab === 'courses'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                        <i data-lucide="book-open-check" class="w-5 h-5 mr-3"></i> Courses
+                    </a>
+                </div>
+                 <!-- Corp only menu -->
+                <div x-show="userType === 'corp'">
+                    <a href="#" @click.prevent="activeTab = 'suppliers'" :class="{'bg-blue-100 text-blue-800': activeTab === 'suppliers'}" class="flex items-center px-6 py-3 hover:bg-gray-200">
+                        <i data-lucide="search" class="w-5 h-5 mr-3"></i> Find Suppliers
+                    </a>
+                </div>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-6">
+                <a href="#" @click.prevent="logout()" class="flex items-center px-6 py-3 text-red-600 hover:bg-red-100 rounded-lg">
+                    <i data-lucide="log-out" class="w-5 h-5 mr-3"></i> Log Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="flex justify-between items-center p-4 bg-white border-b">
+                <h1 class="text-2xl font-semibold text-gray-800" x-text="pageTitle">Dashboard</h1>
+                <div class="flex items-center space-x-4">
+                    <i data-lucide="bell" class="text-gray-500 cursor-pointer"></i>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=AV" alt="Avatar" class="w-10 h-10 rounded-full">
+                        <div class="ml-2">
+                           <p class="font-semibold" x-text="userType === 'farmer' ? 'Green Agro Cooperative' : 'An Food Company'"></p>
+                           <p class="text-sm text-gray-500" x-text="userType === 'farmer' ? 'ID: COOP001' : 'ID: CORP01'"></p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+                <!-- Dashboard Content - Will be dynamically shown based on activeTab -->
+                <div x-show="activeTab === 'dashboard'" class="fade-in">
+                    <!-- Farmer Dashboard -->
+                    <div x-show="userType === 'farmer'">
+                       <h2 class="text-xl font-semibold mb-4">Welcome, Green Agro Cooperative!</h2>
+                       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">Enterprise Partners</h3>
+                               <p class="text-3xl font-bold text-green-600">3</p>
+                           </div>
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">Shipments This Month</h3>
+                               <p class="text-3xl font-bold text-green-600">12</p>
+                           </div>
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">Compliance Rate</h3>
+                               <p class="text-3xl font-bold text-green-600">98.5%</p>
+                           </div>
+                       </div>
+                       <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-4">Recent Risk Alerts</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start p-4 bg-yellow-100 text-yellow-800 rounded-lg">
+                                    <i data-lucide="cloud-rain" class="w-6 h-6 mr-3 flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold">Bad Weather</p>
+                                        <p>Heavy rain is forecast for the next 3 days in your area. Please take measures to protect crops and plan your harvest accordingly.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start p-4 bg-orange-100 text-orange-800 rounded-lg">
+                                    <i data-lucide="loader" class="w-6 h-6 mr-3 flex-shrink-0"></i>
+                                    <div>
+                                        <p class="font-semibold">Risk of Delivery Delay</p>
+                                        <p>Shipment #DH-056 to An Food Company is at risk of a 1-day delay. Please update the status.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Corp Dashboard -->
+                    <div x-show="userType === 'corp'">
+                       <h2 class="text-xl font-semibold mb-4">Welcome, An Food Company!</h2>
+                       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">Active Suppliers</h3>
+                               <p class="text-3xl font-bold text-blue-600">8</p>
+                           </div>
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">Orders in Progress</h3>
+                               <p class="text-3xl font-bold text-blue-600">25</p>
+                           </div>
+                           <div class="bg-white p-6 rounded-lg shadow">
+                               <h3 class="text-lg font-semibold text-gray-500">On-time Delivery Rate</h3>
+                               <p class="text-3xl font-bold text-blue-600">99.2%</p>
+                           </div>
+                       </div>
+                       <div class="bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-4">Find New Suppliers</h3>
+                            <form class="grid sm:grid-cols-4 gap-4">
+                               <input type="text" placeholder="Crop type..." class="px-4 py-2 border rounded-lg col-span-2">
+                               <input type="text" placeholder="Location..." class="px-4 py-2 border rounded-lg">
+                               <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Search</button>
+                           </form>
+                       </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder for other tabs -->
+                <div x-show="activeTab !== 'dashboard'" class="fade-in bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold" x-text="pageTitle"></h2>
+                    <p class="mt-4 text-gray-600">The content for the <span x-text="pageTitle.toLowerCase()"></span> page will be displayed here. This is a mock-up to demonstrate the full features of the application.</p>
+                    <div class="mt-8 border-t pt-6">
+                        <h3 class="text-lg font-semibold mb-4">Key Features:</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>View and manage detailed information.</li>
+                            <li>Track status and history.</li>
+                            <li>Generate, view, and export relevant reports.</li>
+                            <li>Receive important notifications and alerts.</li>
+                            <li>Interact and exchange information with stakeholders.</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script>
+        function farmNextApp() {
+            return {
+                isLoggedIn: false,
+                isLoginModalOpen: false,
+                userType: 'farmer', // 'farmer' or 'corp'
+                activeTab: 'dashboard',
+                
+                pageTitles: {
+                    'dashboard': 'Dashboard',
+                    'supply-chain': 'Supply Chain',
+                    'quality': 'Quality Control',
+                    'risk': 'Risk Management',
+                    'reports': 'Reports',
+                    'contact': 'Contact & Support',
+                    'courses': 'Courses',
+                    'suppliers': 'Find Suppliers'
+                },
+
+                get pageTitle() {
+                    return this.pageTitles[this.activeTab] || 'Home';
+                },
+
+                openLoginModal() {
+                    this.isLoginModalOpen = true;
+                },
+                closeLoginModal() {
+                    this.isLoginModalOpen = false;
+                },
+                performLogin() {
+                    // This is a simulation
+                    if (this.userType) {
+                        this.isLoggedIn = true;
+                        this.isLoginModalOpen = false;
+                        this.activeTab = 'dashboard';
+                    } else {
+                        alert('Please select your user type!');
+                    }
+                },
+                loginAs(type) {
+                    this.userType = type;
+                    this.performLogin();
+                },
+                logout() {
+                    this.isLoggedIn = false;
+                    this.userType = 'farmer'; // reset to default
+                },
+                init() {
+                    lucide.createIcons();
+                    // Re-run lucide when data changes, useful for dynamic icons
+                    this.$watch('isLoggedIn', () => this.$nextTick(() => lucide.createIcons()));
+                    this.$watch('activeTab', () => this.$nextTick(() => lucide.createIcons()));
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
+
